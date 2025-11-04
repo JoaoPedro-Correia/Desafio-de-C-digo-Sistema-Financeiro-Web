@@ -2,7 +2,6 @@ import {connection} from '../../index.js';
 
 export class Cliente{
     static async createTable(){
-        // const client = await connectToDatabase();
         let sql = `CREATE TABLE IF NOT EXISTS clientes (
             id SERIAL PRIMARY KEY,
             nome TEXT NOT NULL,

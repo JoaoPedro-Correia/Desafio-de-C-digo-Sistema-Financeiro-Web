@@ -1,0 +1,57 @@
+import { ClienteService } from '../service/clienteService.js';
+import express from 'express'
+
+const router = express.Router()
+router.use(express.json())
+
+router.get('/cliente', async (_req, res) => {
+    try {
+        const clientes = await ClienteService.listAllClientes();
+        res.status(200).json(clientes);
+    } catch (error) {
+        res.status(500).send('Erro ao listar clientes');    
+    }
+});
+
+router.get('/cliente/:id', async (req, res) => {
+    try {
+        const {id} = req.params; 
+        const cliente = await ClienteService.getClienteById(id);
+        res.status(200).json(cliente);
+    } catch (error) {
+        res.status(500).send('Erro ao listar clientes');    
+    }
+});
+
+router.post('/cliente', async (req, res) => {
+  try {
+    const cliente = req.body;
+    await ClienteService.createCliente(cliente);
+    res.status(201).send('Cliente criado');
+  } catch (error) {
+    res.status(500).send('Erro ao criar cliente');
+  }
+});
+
+router.put('/cliente/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const clienteData = req.body;
+    await ClienteService.updateCliente(id, clienteData);
+    res.status(204).send(`Cliente ${id} atualizado`);
+  } catch (error) {
+    res.status(500).send('Erro ao atualizar cliente');
+  }
+});
+
+router.delete('/cliente/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ClienteService.deleteCliente(id);
+    res.status(200).send(`Cliente ${id} deletado`);
+  } catch (error) {
+    res.status(500).send('Erro ao deletar cliente');
+  }
+});
+
+export {router as clienteRouter};
