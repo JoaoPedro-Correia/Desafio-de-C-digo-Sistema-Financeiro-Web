@@ -6,10 +6,12 @@ async function createUsuario(usuario) {
     return await client.query(sql, [usuario.nome, usuario.email]);;
 }
 
-async function listUsuario() {
+async function listUsuarios() {
     const client = await connectToDatabase();
-    sql = 'SELECT * FROM usuarios';
+    sql = 'SELECT * FROM usuarios;';
     const result = await client.query(sql);
+    console.log("Resultados: "+result);
+    
     return result.rows;
 }
 
@@ -36,7 +38,7 @@ async function removeUsuario(id) {
 
 export {
     createUsuario,
-    listUsuario,
+    listUsuarios,
     getUsuarioById,
     updateUsuario,
     removeUsuario,

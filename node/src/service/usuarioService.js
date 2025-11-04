@@ -5,8 +5,8 @@ export class UsuarioService {
         return await createUsuario(usuarioData);
     }
 
-    static async listAllUsuario(id) {
-        return await listUsuario(id);
+    static async listAllUsuario() {
+        return await listUsuarios();
     }
 
     static async getUsuarioById(id) {

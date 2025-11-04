@@ -1,8 +1,7 @@
-import {connectToDatabase} from '../../db.js';
+import {connection} from '../../index.js'; 
 
 export class Ordem{
     static async createTable(){
-        const client = await connectToDatabase();
         let sql = `CREATE TABLE IF NOT EXISTS ordem (
             id SERIAL PRIMARY KEY,
             data_inicio TIMESTAMP DEFAULT CURRENT_DATE,
@@ -13,6 +12,6 @@ export class Ordem{
             cliente_id INTEGER NOT NULL,
             FOREIGN KEY (cliente_id) REFERENCES clientes(id)
         )`;
-        await client.query(sql);
+        await connection.query(sql);
     }
 }

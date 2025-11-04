@@ -4,9 +4,9 @@ let pool;
 
 export async function connectToDatabase() {
     //verifica se já existe uma conexão ativa
-    // if(global.connection){
-    //     return global.connection.connect();
-    // }
+    if(global.connection){
+        return global.connection.connect();
+    }
 
     if(!pool){
         pool = new Pool({
@@ -18,7 +18,7 @@ export async function connectToDatabase() {
         });
         console.log("->Nova conexão criada com o banco de dados.");
     }
-    return pool.connect();
+    // global.connection = await pool.connect();
     
     // const client = await pool.connect();
 
@@ -26,8 +26,5 @@ export async function connectToDatabase() {
     // let row = await client.query('SELECT NOW()');
     // console.log("Horario do DB:",row.rows);
 
-    // global.connection = client;
-    // return pool.connect();
+    return pool.connect();
 }
-
-connectToDatabase();

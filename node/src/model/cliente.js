@@ -1,8 +1,8 @@
-import {connectToDatabase} from '../../db.js';
+import {connection} from '../../index.js'; 
 
 export class Cliente{
     static async createTable(){
-        const client = await connectToDatabase();
+        // const client = await connectToDatabase();
         let sql = `CREATE TABLE IF NOT EXISTS clientes (
             id SERIAL PRIMARY KEY,
             nome TEXT NOT NULL,
@@ -10,6 +10,6 @@ export class Cliente{
             telefone TEXT NOT NULL,
             ativo BOOLEAN NOT NULL DEFAULT TRUE
         )`;
-        await client.query(sql);
+        await connection.query(sql);
     }
 }

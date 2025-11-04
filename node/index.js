@@ -1,11 +1,13 @@
 import 'dotenv/config'
 import express from 'express'
-import './db.js'
+import {connectToDatabase} from './db.js'
 import './src/model/usuario.js'
 import { Usuario } from './src/model/usuario.js'
 import { Cliente } from './src/model/cliente.js'
 import { Ordem } from './src/model/ordem.js'
 import {usuarioRouter} from './src/controller/usuarioController.js'
+
+export { app }
 
 const app = express()
 const port = process.env.PORT || 3030
@@ -14,6 +16,9 @@ const port = process.env.PORT || 3030
 app.use(express.json())
 
 app.use("/api", usuarioRouter)
+
+//Conexao com o banco de dados
+export const connection = await connectToDatabase();
 
 try {
     app.get('/', async (req, res) => {
@@ -30,5 +35,3 @@ await Ordem.createTable();
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
 })
-
-export { app }
