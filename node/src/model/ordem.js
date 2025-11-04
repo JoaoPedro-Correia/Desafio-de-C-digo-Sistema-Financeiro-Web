@@ -6,6 +6,7 @@ export class Ordem{
             id SERIAL PRIMARY KEY,
             data_inicio TIMESTAMP DEFAULT CURRENT_DATE,
             data_fim TIMESTAMP,
+            data_pagamento TIMESTAMP,
             valor INTEGER NOT NULL,
             descricao TEXT NOT NULL,
             status BOOLEAN NOT NULL,

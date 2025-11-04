@@ -1,57 +1,57 @@
-import { UsuarioService } from '../service/usuarioService.js';
+import { OrdemService } from '../service/ordemService.js';
 import express from 'express'
 
 const router = express.Router()
 router.use(express.json())
 
-router.get('/usuario', async (req, res) => {
-    try {
-        const usuarios = await UsuarioService.listAllUsuario();
-        res.status(200).json(usuarios);
-    } catch (error) {
-        res.status(500).send('Erro ao listar usuários');    
-    }
-});
-
-router.get('/usuario/:id', async (req, res) => {
-    try {
-        const {id} = req.params; 
-        const usuario = await UsuarioService.getUsuarioById(id);
-        res.status(200).json(usuario);
-    } catch (error) {
-        res.status(500).send('Erro ao listar usuários');    
-    }
-});
-
-router.post('/usuario', async (req, res) => {
+router.get('/ordem', async (_req, res) => {
   try {
-    const usuario = req.body;
-    await UsuarioService.createUsuario(usuario);
-    res.status(201).send('Usuário criado');
+    const ordems = await OrdemService.listAllOrdem();
+    res.status(200).json(ordems);
   } catch (error) {
-    res.status(500).send('Erro ao criar usuário');
+    res.status(500).send('Erro ao listar ordems');    
   }
 });
 
-router.put('/usuario/:id', async (req, res) => {
+router.get('/ordem/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const usuarioData = req.body;
-    await UsuarioService.updateUsuario(id, usuarioData);
-    res.status(204).send(`Usuário ${id} atualizado`);
+    const {id} = req.params; 
+    const ordem = await OrdemService.getOrdemById(id);
+    res.status(200).json(ordem);
   } catch (error) {
-    res.status(500).send('Erro ao atualizar usuário');
+    res.status(500).send('Erro ao listar ordens');    
   }
 });
 
-router.delete('/usuario/:id', async (req, res) => {
+router.post('/ordem', async (req, res) => {
+  try {
+    const ordem = req.body;
+    await OrdemService.createOrdem(ordem);
+    res.status(201).send('Ordem criado');
+  } catch (error) {
+    res.status(500).send('Erro ao criar ordem');
+  }
+});
+
+router.put('/ordem/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    await UsuarioService.deleteUsuario(id);
-    res.status(200).send(`Usuário ${id} deletado`);
+    const ordemData = req.body;
+    await OrdemService.updateOrdem(id, ordemData);
+    res.status(204).send(`Ordem ${id} atualizado`);
   } catch (error) {
-    res.status(500).send('Erro ao deletar usuário');
+    res.status(500).send('Erro ao atualizar ordem');
   }
 });
 
-export {router as usuarioRouter};
+router.delete('/ordem/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await OrdemService.deleteOrdem(id);
+    res.status(200).send(`Ordem ${id} deletado`);
+  } catch (error) {
+    res.status(500).send('Erro ao deletar ordem');
+  }
+});
+
+export {router as ordemRouter};
