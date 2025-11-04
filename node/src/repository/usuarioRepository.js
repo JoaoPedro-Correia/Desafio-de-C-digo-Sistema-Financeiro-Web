@@ -1,4 +1,4 @@
-import {connectToDatabase} from "../db.js";
+import {connectToDatabase} from "../../db.js";
 
 async function createUsuario(usuario) {
     const client = await connectToDatabase();
@@ -34,10 +34,10 @@ async function removeUsuario(id) {
     return result.rows[0];
 }
 
-module.exports = {
+export {
     createUsuario,
     listUsuario,
     getUsuarioById,
     updateUsuario,
     removeUsuario,
-};
+};    

@@ -1,21 +1,38 @@
-import express from 'express';
+import '../service/usuarioService.js'
+import { UsuarioService } from '../service/usuarioService.js';
+import express from 'express'
 
-const app = express();
+const router = express()
 
-app.get('/usuarios', (req, res) => {
-  res.send('Lista de usuários');
+router.get('/usuario', (req, res) => {
+    try {
+        console.log('\nlistados\n ');
+        
+        const usuarios = UsuarioService.listAllUsuarios();
+        res.status(200).send(usuarios);
+    } catch (error) {
+        res.status(500).send('Erro ao listar usuários');    
+    }
 });
 
-app.post('/usuarios', (req, res) => {
-  res.send('Usuário criado');
+router.post('/usuarios', (req, res) => {
+  try {
+      const usuario = req.body;
+      UsuarioService.createUsuario(usuario);
+      res.status(201).send('Usuário criado');
+  } catch (error) {
+      res.status(500).send('Erro ao criar usuário');
+  }
 });
 
-app.put('/usuarios/:id', (req, res) => {
+router.put('/usuarios/:id', (req, res) => {
   const { id } = req.params;
   res.send(`Usuário ${id} atualizado`);
 }); 
 
-app.delete('/usuarios/:id', (req, res) => {
+router.delete('/usuarios/:id', (req, res) => {
   const { id } = req.params;
   res.send(`Usuário ${id} deletado`);
 });
+
+export {router as usuarioRouter};

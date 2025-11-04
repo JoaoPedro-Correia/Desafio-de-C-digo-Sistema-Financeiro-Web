@@ -19,6 +19,7 @@ export async function connectToDatabase() {
         console.log("->Nova conexão criada com o banco de dados.");
     }
     return pool.connect();
+    
     // const client = await pool.connect();
 
     // console.log("Conectado ao banco de dados com sucesso!");

@@ -1,4 +1,5 @@
 import {connectToDatabase} from '../../db.js';
+import bcrypt from "bcrypt";
 
 export class Usuario{
     static async createTable(){

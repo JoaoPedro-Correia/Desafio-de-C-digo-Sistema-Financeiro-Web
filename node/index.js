@@ -5,12 +5,23 @@ import './src/model/usuario.js'
 import { Usuario } from './src/model/usuario.js'
 import { Cliente } from './src/model/cliente.js'
 import { Ordem } from './src/model/ordem.js'
+import {usuarioRouter} from './src/controller/usuarioController.js'
 
 const app = express()
-const port = process.env.PGPORT 
+const port = process.env.PORT || 3030
 
 //permite o uso de JSON no corpo das requisições
 app.use(express.json())
+
+app.use("/api", usuarioRouter)
+
+try {
+    app.get('/', async (req, res) => {
+        res.json({mensagem:'API de Gestão de Usuários, Clientes e Ordens de Serviço'})
+    });
+} catch(err) {
+    console.error('Erro ao definir rota raiz:', err);
+}
 
 await Usuario.createTable();
 await Cliente.createTable();
