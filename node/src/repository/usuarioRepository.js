@@ -1,39 +1,38 @@
-import {connectToDatabase} from "../../db.js";
+import {connection} from "../../index.js";
+import bcrypt from "bcrypt";
+
+let sql = '';
 
 async function createUsuario(usuario) {
-    const client = await connectToDatabase();
-    sql = 'INSERT INTO usuarios (nome, email) VALUES ($1, $2)'
-    return await client.query(sql, [usuario.nome, usuario.email]);;
+    const ps = await bcrypt.hash(usuario.senha,10);
+    sql = 'INSERT INTO usuarios (nome, email, senha, administrador) VALUES ($1, $2, $3, $4)';
+    return await connection.query(sql, [usuario.nome, usuario.email, ps, usuario.administrador]);
 }
 
+// Listar todos os usuários
 async function listUsuarios() {
-    const client = await connectToDatabase();
-    sql = 'SELECT * FROM usuarios;';
-    const result = await client.query(sql);
-    console.log("Resultados: "+result);
-    
+    sql = "SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.administrador FROM usuarios";
+    const result = await connection.query(sql);
     return result.rows;
 }
 
 async function getUsuarioById(id) {
-    const client = await connectToDatabase();
-    sql = 'SELECT * FROM usuarios WHERE id = $1';
-    const result = await client.query(sql, [id]);
+    sql = 'SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.administrador FROM usuarios WHERE id=$1';
+    const result = await connection.query(sql, [id]);
     return result.rows[0];
 }
 
 async function updateUsuario(id, usuario) {
-    const client = await connectToDatabase();
-    sql = 'UPDATE usuarios SET nome = $1, email = $2 WHERE id = $3';
-    const result = await client.query(sql, [usuario.nome, usuario.email, id]);
-    return result.rows[0];
+    const ps = await bcrypt.hash(usuario.senha, 10);
+
+    sql = 'UPDATE usuarios SET nome = $1, email = $2, administrador = $3, senha = $4 WHERE id = $5';
+    const result = await connection.query(sql, [usuario.nome, usuario.email, usuario.administrador, ps, id]);
+    return result.rows;
 }
 
 async function removeUsuario(id) {
-    const client = await connectToDatabase();
     sql = 'DELETE FROM usuarios WHERE id = $1';
-    const result = await client.query(sql, [id]);
-    return result.rows[0];
+    return await connection.query(sql, [id]);
 }
 
 export {

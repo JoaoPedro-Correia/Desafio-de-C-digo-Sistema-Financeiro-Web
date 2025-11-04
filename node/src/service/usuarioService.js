@@ -1,4 +1,6 @@
-import '../repository/usuarioRepository.js';
+import {createUsuario, listUsuarios, getUsuarioById, 
+    updateUsuario, removeUsuario
+} from '../repository/usuarioRepository.js';
 
 export class UsuarioService {
     static async createUsuario(usuarioData) {

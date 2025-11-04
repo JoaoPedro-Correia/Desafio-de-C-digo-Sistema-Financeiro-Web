@@ -2,19 +2,28 @@ import { UsuarioService } from '../service/usuarioService.js';
 import express from 'express'
 
 const router = express.Router()
+router.use(express.json())
 
-router.get('/usuario', (req, res) => {
+router.get('/usuario', async (req, res) => {
     try {
-        console.log('\nlistados\n ');
-        
-        const usuarios = UsuarioService.listAllUsuarios();
-        res.status(200).send(usuarios);
+        const usuarios = await UsuarioService.listAllUsuario();
+        res.status(200).json(usuarios);
     } catch (error) {
         res.status(500).send('Erro ao listar usuários');    
     }
 });
 
-router.post('/usuarios', async (req, res) => {
+router.get('/usuario/:id', async (req, res) => {
+    try {
+        const {id} = req.params; 
+        const usuario = await UsuarioService.getUsuarioById(id);
+        res.status(200).json(usuario);
+    } catch (error) {
+        res.status(500).send('Erro ao listar usuários');    
+    }
+});
+
+router.post('/usuario', async (req, res) => {
   try {
     const usuario = req.body;
     await UsuarioService.createUsuario(usuario);
@@ -24,18 +33,18 @@ router.post('/usuarios', async (req, res) => {
   }
 });
 
-router.put('/usuarios/:id', async (req, res) => {
+router.put('/usuario/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const usuarioData = req.body;
     await UsuarioService.updateUsuario(id, usuarioData);
-    res.status(200).send(`Usuário ${id} atualizado`);
+    res.status(204).send(`Usuário ${id} atualizado`);
   } catch (error) {
     res.status(500).send('Erro ao atualizar usuário');
   }
 });
 
-router.delete('/usuarios/:id', async (req, res) => {
+router.delete('/usuario/:id', async (req, res) => {
   try {
     const { id } = req.params;
     await UsuarioService.deleteUsuario(id);
