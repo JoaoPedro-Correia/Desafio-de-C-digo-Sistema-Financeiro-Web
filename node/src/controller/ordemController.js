@@ -51,7 +51,7 @@ router.post('/ordem', async (req, res) => {
   try {
     const ordem = req.body;
     await OrdemService.createOrdem(ordem);
-    res.status(201).send('Ordem criado');
+    res.status(201).send('Ordem criada');
   } catch (error) {
     res.status(500).send(`Erro ao criar ordem: ${error.message}`);
   }
@@ -73,8 +73,7 @@ router.put('/ordem/:id', async (req, res) => {
 router.put('/ordem/:id/pagamento', async (req, res) => {
   try {
     const { id } = req.params;
-    const ordemData = req.body;
-    await OrdemService.updateOrdem(id, ordemData);
+    await OrdemService.updatePagamento(id);
     res.status(204).send(`Ordem ${id} atualizado`);
   } catch (error) {
     res.status(500).send('Erro ao atualizar ordem');

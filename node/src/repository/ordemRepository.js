@@ -39,6 +39,8 @@ async function updateOrdem(id, ordem) {
 }
 
 async function updatePagamento(id) {
+    console.log(id);
+    
     sql = 'UPDATE ordem SET data_pagamento = CURRENT_DATE WHERE id = $1';
     const result = await connection.query(sql, [id]);
     return result.rows;

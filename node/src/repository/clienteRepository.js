@@ -14,7 +14,20 @@ async function listClientes() {
     return result.rows;
 }
 
-async function listClientesAtivo(ativo) {
+async function listClientesAdimplentes() {
+    sql = `SELECT * from clientes
+        EXCEPT
+        SELECT cli.id,cli.nome,cli.email,cli.telefone,cli.ativo 
+        FROM clientes as cli 
+        join ordem as ord on 
+        cli.id=ord.cliente_id and
+        ord.data_pagamento is null
+        GROUP BY cli.id`;
+    const result = await connection.query(sql);
+    return result.rows;
+}
+
+async function getClienteByAtivo(ativo) {
     sql = "SELECT * FROM clientes WHERE ativo = $1";
     const result = await connection.query(sql, [ativo]);
     return result.rows;
@@ -40,8 +53,9 @@ async function removeCliente(id) {
 export {
     createCliente,
     listClientes,
+    listClientesAdimplentes,
     getClienteById,
+    getClienteByAtivo,
     updateCliente,
     removeCliente,
-    listClientesAtivo
 };    

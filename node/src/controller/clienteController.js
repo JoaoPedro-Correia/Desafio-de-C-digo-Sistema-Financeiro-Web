@@ -13,6 +13,26 @@ router.get('/cliente', async (_req, res) => {
     }
 });
 
+//List clientes adimplentes
+router.get('/clienteadimplente', async (_req, res) => {
+    try {
+        const clientes = await ClienteService.listAllClientesAdimplentes();
+        res.status(200).json(clientes);
+    } catch (error) {
+        res.status(500).send('Erro ao listar clientes');    
+    }
+});
+
+//List clientes inadimplentes
+router.get('/clienteinadimplente', async (_req, res) => {
+    try {
+        const clientes = await ClienteService.listAllClientesInadimplentes();
+        res.status(200).json(clientes);
+    } catch (error) {
+        res.status(500).send('Erro ao listar clientes');    
+    }
+});
+
 router.get('/cliente/:id', async (req, res) => {
     try {
         const {id} = req.params; 
@@ -24,10 +44,10 @@ router.get('/cliente/:id', async (req, res) => {
 });
 
 // Listar clientes ativos/inativos
-router.get('/clienteativo', async (req, res) => {
+router.get('/cliente/ativo/:ativo', async (req, res) => {
     try {
-        const {ativo} = req.body; 
-        const clientes = await ClienteService.listAllClientesAtivo(ativo);
+        const {ativo} = req.params; 
+        const clientes = await ClienteService.getClientesAtivo(ativo);
         res.status(200).json(clientes);
     } catch (error) {
         res.status(500).send('Erro ao listar clientes');    

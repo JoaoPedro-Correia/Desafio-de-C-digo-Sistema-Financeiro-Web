@@ -1,6 +1,6 @@
 import {createOrdem, listOrdem, getOrdemById, 
     updateOrdem, removeOrdem, getOrdemByClienteId,
-    listOrdemAtiva
+    listOrdemAtiva, updatePagamento
 } from '../repository/ordemRepository.js';
 
 export class OrdemService {
