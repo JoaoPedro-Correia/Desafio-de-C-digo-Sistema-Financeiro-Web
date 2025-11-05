@@ -14,6 +14,12 @@ async function listClientes() {
     return result.rows;
 }
 
+async function listClientesAtivo(ativo) {
+    sql = "SELECT * FROM clientes WHERE ativo = $1";
+    const result = await connection.query(sql, [ativo]);
+    return result.rows;
+}
+
 async function getClienteById(id) {
     sql = 'SELECT * FROM clientes WHERE id=$1';
     const result = await connection.query(sql, [id]);
@@ -37,4 +43,5 @@ export {
     getClienteById,
     updateCliente,
     removeCliente,
+    listClientesAtivo
 };    

@@ -1,5 +1,6 @@
 import {createCliente, listClientes, getClienteById, 
-    updateCliente, removeCliente
+    updateCliente, removeCliente,
+    listClientesAtivo
 } from '../repository/clienteRepository.js';
 
 export class ClienteService {
@@ -9,6 +10,10 @@ export class ClienteService {
 
     static async listAllClientes() {
         return await listClientes();
+    }
+
+    static async listAllClientesAtivo(ativo=true) {
+        return await listClientesAtivo(ativo);
     }
 
     static async getClienteById(id) {

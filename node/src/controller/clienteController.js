@@ -23,6 +23,17 @@ router.get('/cliente/:id', async (req, res) => {
     }
 });
 
+// Listar clientes ativos/inativos
+router.get('/clienteativo', async (req, res) => {
+    try {
+        const {ativo} = req.body; 
+        const clientes = await ClienteService.listAllClientesAtivo(ativo);
+        res.status(200).json(clientes);
+    } catch (error) {
+        res.status(500).send('Erro ao listar clientes');    
+    }
+});
+
 router.post('/cliente', async (req, res) => {
   try {
     const cliente = req.body;
