@@ -1,8 +1,10 @@
 import { OrdemService } from '../service/ordemService.js';
 import express from 'express'
+import pkg from 'cors'
 
 const router = express.Router()
 router.use(express.json())
+router.use(pkg())
 
 //lista todas as ordens
 router.get('/ordem', async (_req, res) => {

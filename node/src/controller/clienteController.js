@@ -1,8 +1,10 @@
 import { ClienteService } from '../service/clienteService.js';
 import express from 'express'
+import pkg from 'cors'
 
 const router = express.Router()
 router.use(express.json())
+router.use(pkg())
 
 router.get('/cliente', async (_req, res) => {
     try {

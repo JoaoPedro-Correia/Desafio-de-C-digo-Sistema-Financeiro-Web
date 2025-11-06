@@ -1,8 +1,10 @@
 import { UsuarioService } from '../service/usuarioService.js';
 import express from 'express'
+import pkg from 'cors'
 
 const router = express.Router()
 router.use(express.json())
+router.use(pkg())
 
 router.get('/usuario', async (req, res) => {
     try {
