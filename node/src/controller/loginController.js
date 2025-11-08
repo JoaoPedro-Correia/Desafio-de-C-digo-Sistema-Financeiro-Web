@@ -8,11 +8,11 @@ router.use(pkg());
 
 router.post('/login', async (req, res) => {
     try {
-        console.log("entrou");
-        
         const { email, senha } = req.body;
-        await LoginService.authentication(email, senha);
-        res.status(200).send('Login realizado com sucesso');
+        const result = await LoginService.authentication(email, senha);
+        console.log(result);
+        
+        res.status(200).json(result);
     } catch (error) {
         res.status(500).send('Email e/ou senha estão errados');
     }

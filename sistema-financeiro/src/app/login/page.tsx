@@ -33,9 +33,12 @@ export default function LoginPage() {
       if (!res.ok){
         alert("Erro ao conectar com o servidor")
         throw new Error("Credenciais inválidas")
-    };
-    //    const menssage = await res.status;
-    //    alert(menssage);
+      };
+      
+      const menssage = (await res.json());
+      window.sessionStorage.setItem("userAdmin", menssage.administrador);
+      window.sessionStorage.setItem("userId", menssage.id);
+      alert(window.sessionStorage.getItem("userAdmin") === "true" ? "Login realizado como Administrador" : "Login realizado como Usuário comum");
       // Simulate redirect on success
       router.push("/home")  ;
     } catch (err: any) {
