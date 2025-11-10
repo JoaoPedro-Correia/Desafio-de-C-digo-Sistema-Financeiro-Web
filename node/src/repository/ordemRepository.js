@@ -51,6 +51,11 @@ async function removeOrdem(id) {
     return await connection.query(sql, [id]);
 }
 
+async function removeOrdemByClienteId(clienteid){
+    sql = 'DELETE FROM ordem WHERE cliente_id=$1';
+    return await connection.query(sql,[clienteid]);
+}
+
 export {
     createOrdem,
     listOrdem,
@@ -60,4 +65,5 @@ export {
     updateOrdem,
     updatePagamento,
     removeOrdem,
+    removeOrdemByClienteId,
 };    

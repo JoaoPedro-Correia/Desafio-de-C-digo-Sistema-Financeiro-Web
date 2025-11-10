@@ -1,6 +1,6 @@
 import {createOrdem, listOrdem, getOrdemById, 
     updateOrdem, removeOrdem, getOrdemByClienteId,
-    listOrdemAtiva, updatePagamento
+    listOrdemAtiva, updatePagamento,removeOrdemByClienteId
 } from '../repository/ordemRepository.js';
 
 export class OrdemService {
@@ -39,6 +39,10 @@ export class OrdemService {
 
     static async deleteOrdem(id) {
         return await removeOrdem(id);
+    }
+
+    static async deleteOrdemByClienteId(id) {
+        return await removeOrdemByClienteId(id);
     }
 
     static #validateOrdemData(ordemData) {

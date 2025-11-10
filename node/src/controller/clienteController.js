@@ -1,10 +1,10 @@
 import { ClienteService } from '../service/clienteService.js';
 import express from 'express'
-import pkg from 'cors'
+import cors from 'cors'
 
 const router = express.Router()
 router.use(express.json())
-router.use(pkg())
+router.use(cors())
 
 router.get('/cliente', async (_req, res) => {
     try {
@@ -27,7 +27,7 @@ router.get('/clienteadimplente', async (_req, res) => {
 
 //List clientes inadimplentes
 router.get('/clienteinadimplente', async (_req, res) => {
-    try {
+    try{
         const clientes = await ClienteService.listAllClientesInadimplentes();
         res.status(200).json(clientes);
     } catch (error) {

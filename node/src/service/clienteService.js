@@ -2,10 +2,12 @@ import {createCliente, listClientes, getClienteById,
     updateCliente, removeCliente,
     getClienteByAtivo, listClientesAdimplentes
 } from '../repository/clienteRepository.js';
+import { OrdemService } from '../service/ordemService.js';
 
 export class ClienteService {
     static async createCliente(clienteData) {
         this.#validateClienteData(clienteData);
+        
         return await createCliente(clienteData);
     }
 
@@ -42,6 +44,7 @@ export class ClienteService {
     }
 
     static async deleteCliente(id) {
+        await OrdemService.deleteOrdemByClienteId(id)
         return await removeCliente(id);
     }
 
@@ -58,7 +61,7 @@ export class ClienteService {
             throw new Error('Telefone é obrigatório');
         }
 
-        if(!clienteData.ativo){
+        if(clienteData.ativo == null){
             throw new Error('Status de ativo é obrigatório');
         }
     }
