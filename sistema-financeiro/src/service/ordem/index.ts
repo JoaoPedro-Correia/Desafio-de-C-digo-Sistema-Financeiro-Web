@@ -27,7 +27,7 @@ export const createOrdem = async (ordem: Ordem): Promise<string> => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(ordem),
     })
-    return res.json();
+    return res.text();
 }
 
 export const updateOrdem = async (id: number,ordem: Ordem): Promise<string> => {
@@ -36,7 +36,7 @@ export const updateOrdem = async (id: number,ordem: Ordem): Promise<string> => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(ordem),
     })
-    return res.json();
+    return res.text();
 }
 
 // Atuzaliza o pagamento para a data corrente
@@ -44,12 +44,12 @@ export const updateOrdemPagamento = async (id: number): Promise<string> => {
     const res = await fetch(`http://localhost:3030/api/ordem/${id}/pagamento`,{
         method: "PUT",
     })
-    return res.json();
+    return res.text();
 }
 
 export const deleteOrdem = async (id: number): Promise<string> => {
     const res = await fetch(`http://localhost:3030/api/ordem/${id}`,{
         method: "DELETE",
     })
-    return res.json();
+    return res.text();
 }

@@ -27,7 +27,7 @@ export const getClientesInadimplentes = async (): Promise<Cliente> => {
     return res.json();
 }
 
-export const createClientes = async (cliente: Cliente): Promise<string> => {
+export const createClientes = async (cliente: Cliente): Promise<any> => {
     const res = await fetch(`http://localhost:3030/api/cliente`,{
         method: "POST",
         headers:  {"Content-Type": "application/json"} ,
@@ -45,9 +45,11 @@ export const updateClientes = async (id:number, cliente: Cliente): Promise<strin
     return res.text();
 }
 
-export const deleteClientes = async (id:number): Promise<string> => {
+export const deleteClientes = async (id:number): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/cliente/${id}`,{
-        method: "DELETE",
+        method: "DELETE"
     })
-    return res.text();
+    if(!res.ok)
+        throw new Error("Credenciais inválidas")
+    return (await res.status);
 }

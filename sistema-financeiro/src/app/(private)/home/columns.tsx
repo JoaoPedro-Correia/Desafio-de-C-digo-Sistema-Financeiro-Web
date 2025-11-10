@@ -1,9 +1,9 @@
 'use client';
 
-import { Usuario, Cliente, Ordem } from '@/types';
+import { ReqUsuario, Cliente, Ordem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const columnsUsuario: ColumnDef<Usuario>[] = [
+export const columnsUsuario: ColumnDef<ReqUsuario>[] = [
     {
         accessorKey: 'id',
         header: 'ID',

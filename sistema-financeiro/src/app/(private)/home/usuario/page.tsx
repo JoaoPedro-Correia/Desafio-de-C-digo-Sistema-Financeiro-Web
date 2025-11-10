@@ -6,8 +6,10 @@ export default async function Usuario() {
     const data = await getUsuarios()
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <DataTable columns={columnsUsuario} data={data} />
-        </main>
+        <div>
+            <main className="flex min-h-screen flex-col items-center justify-between p-24">
+                <DataTable columns={columnsUsuario} data={data} />
+            </main>
+        </div>
     );
 }

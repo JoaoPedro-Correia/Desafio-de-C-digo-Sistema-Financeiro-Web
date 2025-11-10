@@ -31,14 +31,14 @@ export default function LoginPage() {
       })
 
       if (!res.ok){
-        alert("Erro ao conectar com o servidor")
+        // alert("Erro ao conectar com o servidor")
         throw new Error("Credenciais inválidas")
       };
       
       const menssage = (await res.json());
       window.sessionStorage.setItem("userAdmin", menssage.administrador);
       window.sessionStorage.setItem("userId", menssage.id);
-      alert(window.sessionStorage.getItem("userAdmin") === "true" ? "Login realizado como Administrador" : "Login realizado como Usuário comum");
+      // alert(window.sessionStorage.getItem("userAdmin") === "true" ? "Login realizado como Administrador" : "Login realizado como Usuário comum");
       // Simulate redirect on success
       router.push("/home")  ;
     } catch (err: any) {
@@ -59,7 +59,7 @@ export default function LoginPage() {
             <input
               type="email"
               {...register("email", { required: "O email é obrigatório" })}
-              className="mt-1 w-full rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 w-full rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 p-2"
               placeholder="voce@exemplo.com"
             />
             {errors.email && (
@@ -72,7 +72,7 @@ export default function LoginPage() {
             <input
               type="password"
               {...register("senha", { required: "A senha é obrigatória" })}
-              className="mt-1 w-full rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 w-full rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 p-2"
               placeholder="••••••••"
             />
             {errors.senha && (
