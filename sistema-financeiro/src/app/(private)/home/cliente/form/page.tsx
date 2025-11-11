@@ -1,7 +1,7 @@
 'use client';
 
 import { createClientes, updateClientes} from '@/service/cliente'
-import { Cliente } from '@/types';
+import { Cliente, ResCliente } from '@/types';
 import {useRouter, useSearchParams} from 'next/navigation'
 import {useState} from 'react'
 
@@ -22,8 +22,13 @@ export default function ClienteForm(){
     }
 
     function createCliente(){
-        // alert(nome+", "+email+", "+telefone+", "+ativo)
-        const client: Cliente = {
+        if(nome==null)
+            return
+        if(email==null)
+            return
+        if(telefone==null)
+            return
+        const client: ResCliente = {
             nome: nome,
             email: email,
             telefone: telefone,
@@ -31,8 +36,10 @@ export default function ClienteForm(){
         };
 
         if(params?.has("id") && params?.get("id")!==undefined){
-            const id = params?.get("id");
-            const msg = updateClientes(id, client);
+            const id = params.get("id");
+            if(id==null)
+                return
+            const msg = updateClientes(Number(id), client);
             msg.then((status)=>{
                 if(status==204){
                     alert("Cliente atualizado com sucesso!")
@@ -58,15 +65,15 @@ export default function ClienteForm(){
         <div className='row p-6 flex'>
             <div className="col-md-6">
                 <label htmlFor="inputPassword4" className="form-label">Nome</label>
-                <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} className="form-control" id="Nome" name='nome'/>
+                <input type="text" value={nome? nome:""} onChange={(e) => setNome(e.target.value)} className="form-control" id="Nome" name='nome'/>
             </div>
             <div className="col-md-6">
                 <label htmlFor="inputEmail4" className="form-label">Email</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="Email" name='email'/>
+                <input type="email" value={email?email:""} onChange={(e) => setEmail(e.target.value)} className="form-control" id="Email" name='email'/>
             </div>
             <div className="col-md-6">
                 <label htmlFor="inputEmail4" className="form-label">Telefone</label>
-                <input type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} className="form-control" id="Telefone" name='telefone'/>
+                <input type="tel" value={telefone?telefone:""} onChange={(e) => setTelefone(e.target.value)} className="form-control" id="Telefone" name='telefone'/>
             </div>
             <div className="form-check m-3">
                 <input className="form-check-input" type="checkbox" defaultChecked={(!ativo? undefined:true)} onChange={onChangeCheckBox} id="ativo" name='ativo'/>

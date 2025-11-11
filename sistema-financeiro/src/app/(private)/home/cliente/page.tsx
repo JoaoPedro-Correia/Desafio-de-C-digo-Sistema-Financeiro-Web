@@ -7,8 +7,7 @@ export default async function ClienteHome() {
 
     return (
         <div className='w-screen h-screen bg-gray-100 text-center flex justify-center p-6'>
-            <ClienteList clientes={clientes} adimplentes={adimplentes} >
-                </ClienteList>                        
+            {ClienteList(clientes, adimplentes)}
         </div>
     );
 }

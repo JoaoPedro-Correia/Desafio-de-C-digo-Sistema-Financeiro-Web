@@ -1,0 +1,28 @@
+# Use a imagem oficial do Node
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+
+# Instala dependências
+RUN npm install
+
+# Copia os arquivos do projeto
+COPY . .
+
+RUN npm run dev
+
+WORKDIR /app
+
+# Copia o node_modules e os arquivos de build do estágio 'builder'
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# Define o host e a porta de execução
+ENV HOST 0.0.0.0
+EXPOSE 3000
+
+# Comando de execução do servidor Next.js
+CMD ["node", "server.js"]

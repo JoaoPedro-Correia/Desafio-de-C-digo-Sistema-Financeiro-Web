@@ -41,15 +41,16 @@ export default function OrdemForm(){
     }, [])
 
     function sendOrdem(){
-        // Você deve garantir que o valor seja convertido para string ou número
-        // antes de enviar para a API, se ela não aceitar objetos Date diretamente.
+        if(descricao==null)
+            return
+        
         const ordem: Ordem = {
             descricao: descricao,
-            valor: valor,
-            data_inicio: dataInicio ? dataInicio.toISOString().split('T')[0] : null, // Exemplo de formatação para string
-            data_fim: dataFim ? dataFim.toISOString().split('T')[0] : null,
-            data_pagamento: dataPagamento ? dataPagamento.toISOString().split('T')[0] : null,
-            cliente_id: clienteId,
+            valor: Number(valor),
+            data_inicio: dataInicio ? dataInicio : undefined, // Exemplo de formatação para string
+            data_fim: dataFim ? dataFim : undefined,
+            data_pagamento: dataPagamento ? dataPagamento : undefined,
+            cliente_id: Number(clienteId),
         };
 
         if(params?.has("id") && params?.get("id")!==undefined){

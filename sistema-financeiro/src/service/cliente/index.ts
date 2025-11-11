@@ -1,4 +1,4 @@
-import {Cliente} from "@/types";
+import {Cliente, ResCliente} from "@/types";
 
 export const getClientes = async (): Promise<Cliente[]> => {
     const res = await fetch(`http://localhost:3030/api/cliente`)
@@ -10,24 +10,24 @@ export const getClientesById = async (id:number): Promise<Cliente> => {
     return res.json();
 }
 
-export const getClientesByAtivo = async (ativo:boolean): Promise<Cliente> => {
+export const getClientesByAtivo = async (ativo:boolean): Promise<Cliente[]> => {
     const res = await fetch(`http://localhost:3030/api/cliente/ativo/${ativo}`)
     return res.json();
 }
 
 //CLientes Adimplentes
-export const getClientesAdimplentes = async (): Promise<Cliente> => {
+export const getClientesAdimplentes = async (): Promise<Cliente[]> => {
     const res = await fetch(`http://localhost:3030/api/clienteadimplente`)
     return res.json();
 }
 
 //Cientes Inadimplesntes
-export const getClientesInadimplentes = async (): Promise<Cliente> => {
+export const getClientesInadimplentes = async (): Promise<Cliente[]> => {
     const res = await fetch(`http://localhost:3030/api/clienteinadimplente`)
     return res.json();
 }
 
-export const createClientes = async (cliente: Cliente): Promise<number> => {
+export const createClientes = async (cliente: ResCliente): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/cliente`,{
         method: "POST",
         headers:  {"Content-Type": "application/json"} ,
@@ -38,7 +38,7 @@ export const createClientes = async (cliente: Cliente): Promise<number> => {
     return res.status;
 }
 
-export const updateClientes = async (id:number, cliente: Cliente): Promise<number> => {
+export const updateClientes = async (id:number, cliente: ResCliente): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/cliente/${id}`,{
         method: "PUT",
         headers:  {"Content-Type": "application/json"} ,

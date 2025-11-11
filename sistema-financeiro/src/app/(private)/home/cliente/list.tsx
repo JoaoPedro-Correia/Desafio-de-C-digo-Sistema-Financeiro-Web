@@ -6,17 +6,17 @@ import { Pencil, TrashIcon } from 'lucide-react';
 import Link from 'next/link'
 import { useState } from 'react';
 
-export default function ClienteList(props){
-    const [clientes, setClientes] = useState(props.clientes)
-    const [clientesAtivos, setClientesAtivos] = useState(clientes.filter((cliente:any)=>cliente.ativo==true))
-    const [clientesInativos, setClientesInativos] = useState(clientes.filter((cliente:any)=>cliente.ativo!=true))
+export default function ClienteList(clients:Cliente[], adimplentes: Cliente[]){
+    const [clientes, setClientes] = useState(clients)
+    const [clientesAtivos, setClientesAtivos] = useState(clients.filter((cliente:Cliente)=>cliente.ativo==true))
+    const [clientesInativos, setClientesInativos] = useState(clients.filter((cliente:Cliente)=>cliente.ativo!=true))
 
     function onDeleteClienteClick(clienteId: number){
         // console.log(clienteId)
         const msg = deleteClientes(clienteId);
-        const newClientes = clientes.filter((cliente:any) => cliente.id!=clienteId);
-        const newClientesAti = clientesAtivos.filter((cliente:any) => cliente.id!=clienteId);
-        const newClientesIna = clientesInativos.filter((cliente:any) => cliente.id!=clienteId);
+        const newClientes = clientes.filter((cliente:Cliente) => cliente.id!=clienteId);
+        const newClientesAti = clientesAtivos.filter((cliente:Cliente) => cliente.id!=clienteId);
+        const newClientesIna = clientesInativos.filter((cliente:Cliente) => cliente.id!=clienteId);
         setClientes(newClientes)
         setClientesAtivos(newClientesAti)
         setClientesInativos(newClientesIna)
@@ -47,7 +47,7 @@ export default function ClienteList(props){
                             {cliente.email}
                         </div>
                         <div className='bg-amber-400 p-2 w-full rounded-md text-left'>
-                            {props.adimplentes.some((adimplente:any)=>adimplente.id===cliente.id)?"Adimplente":"Inadimplente"}
+                            {adimplentes.some((adimplente:Cliente)=>adimplente.id===cliente.id)?"Adimplente":"Inadimplente"}
                         </div>
                         <Link href={`/home/cliente/form?nome=${cliente.nome}&email=${cliente.email}&telefone=${cliente.telefone}&ativo=${cliente.ativo}&id=${cliente.id}`} className='text-black'>
                         <button className='p-2 rounded-md'>
@@ -67,7 +67,7 @@ export default function ClienteList(props){
                             {cliente.email}
                         </div>
                         <div className='bg-red-400 p-2 w-full rounded-md text-left'>
-                            {props.adimplentes.some((adimplente:any)=>adimplente.id===cliente.id)?"Adimplente":"Inadimplente"}
+                            {adimplentes.some((adimplente:Cliente)=>adimplente.id===cliente.id)?"Adimplente":"Inadimplente"}
                         </div>
                         <Link href={`/home/cliente/form?nome=${cliente.nome}&email=${cliente.email}&telefone=${cliente.telefone}&ativo=${cliente.ativo}&id=${cliente.id}`} className='text-black'>
                         <button className='p-2 rounded-md'>

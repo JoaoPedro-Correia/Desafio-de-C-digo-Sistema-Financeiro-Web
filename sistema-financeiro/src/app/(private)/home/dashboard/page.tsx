@@ -8,6 +8,7 @@ import {Ordem,Cliente} from '@/types'
 
 // Importa os ícones do Lucide React para um visual melhor
 import { UserCheck, UserX, DollarSign } from 'lucide-react';
+import { error } from 'console';
 
 export default function FinanceiroDashboard() {
     const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -65,7 +66,7 @@ export default function FinanceiroDashboard() {
 
 
         ordens.forEach(ordem => {
-            const valorNumerico = parseFloat(ordem.valor || '0');
+            const valorNumerico = parseFloat(ordem.valor.toString() || '0');
             const dataPagamento = ordem.data_pagamento ? new Date(ordem.data_pagamento) : null;
             
             // Verifica pendência

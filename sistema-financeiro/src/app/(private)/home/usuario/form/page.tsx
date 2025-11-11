@@ -21,6 +21,10 @@ export default function UsuarioForm(){
     }
 
     function sendUsuario(){
+        if(nome==null)
+            return
+        if(email==null)
+            return
         const resusuario: ResUsuario = {
             nome: nome,
             email: email,
