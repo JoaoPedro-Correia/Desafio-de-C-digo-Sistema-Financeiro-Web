@@ -11,6 +11,8 @@ services:
       - "3030:3030"
     depends_on:
       - db
+    networks:
+      - dev
 
   frontend:
     build:
@@ -18,27 +20,37 @@ services:
       dockerfile: Dockerfile.front
     container_name: next_frontend
     restart: always
+    environment:
+      - WATCHPACK_POLLING=true  
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - ./sistema-financeiro:/app
     depends_on:
       - backend
+    networks:
+      - dev
   
   db:
     image: postgres
     container_name: postgres-db
     environment:
-      environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: nomedomeubanco
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     volumes:
       - teste_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     expose:
       - 5432
+    networks:
+      - dev
+
+       
+networks:
+  dev:
+    driver: bridge
 
 volumes:
   teste_data:

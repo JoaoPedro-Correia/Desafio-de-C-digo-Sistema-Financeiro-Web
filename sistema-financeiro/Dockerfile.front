@@ -1,19 +1,17 @@
-# Use a imagem oficial do Node
-FROM node:20-alpine as builder
+FROM node:20 AS base
 
 WORKDIR /app
 
+RUN npm i -g pnpm
+
 COPY package*.json ./
 
-# Instala dependências
+COPY . /app
+
+COPY package.json package-lock.json ./
+
 RUN npm install
 
-# Copia os arquivos do projeto
-COPY . .
+EXPOSE 3001
 
-RUN npm i -g pnpm
-    
-EXPOSE 3000
-
-# Comando de execução do servidor Next.js
-CMD ["node", "server.js"]
+CMD ["npm", "run", "dev"]
