@@ -13,6 +13,9 @@ COPY . .
 
 RUN npm run dev
 
+# --- Estágio de Produção ---
+FROM node:20-alpine
+
 WORKDIR /app
 
 # Copia o node_modules e os arquivos de build do estágio 'builder'
