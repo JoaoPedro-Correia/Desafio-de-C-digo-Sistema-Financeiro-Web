@@ -1,15 +1,13 @@
 import { getUsuarios } from '@/service/usuario'
-import { columnsUsuario } from '@/app/(private)/home/columns'
-import {DataTable} from '@/components/ui/data_table'
+import UsuarioList from './list'
 
 export default async function Usuario() {
-    const data = await getUsuarios()
+    const usuarios = await getUsuarios()
 
     return (
-        <div>
-            <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                <DataTable columns={columnsUsuario} data={data} />
-            </main>
+        <div className='w-screen h-screen bg-gray-100 text-center flex justify-center p-6'>
+            <UsuarioList usuarios={usuarios} >
+                </UsuarioList>                        
         </div>
     );
 }

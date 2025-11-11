@@ -59,6 +59,7 @@ router.get('/cliente/ativo/:ativo', async (req, res) => {
 router.post('/cliente', async (req, res) => {
   try {
     const cliente = req.body;
+    console.log(cliente);
     await ClienteService.createCliente(cliente);
     res.status(201).send('Cliente criado');
   } catch (error) {

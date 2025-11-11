@@ -18,7 +18,7 @@ export interface ResUsuario {
 }
 
 export interface Cliente {
-    id: number;
+    id?: number;
     nome: string;
     email: string;
     telefone: string;
@@ -26,7 +26,7 @@ export interface Cliente {
 }
 
 export interface Ordem{
-    id: number;
+    id?: number;
     descricao: string;
     valor: number;
     data_inicio: Date;

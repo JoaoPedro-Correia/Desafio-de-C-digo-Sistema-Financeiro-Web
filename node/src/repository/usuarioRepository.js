@@ -22,6 +22,12 @@ async function getUsuarioById(id) {
     return result.rows[0];
 }
 
+async function getUsuarioSenhaById(id) {
+    sql = 'SELECT usuarios.senha FROM usuarios WHERE id=$1';
+    const result = await connection.query(sql, [id]);
+    return result.rows[0];
+}
+
 async function updateUsuario(id, usuario) {
     const ps = await bcrypt.hash(usuario.senha, 10);
 

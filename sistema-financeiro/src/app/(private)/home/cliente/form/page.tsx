@@ -1,32 +1,59 @@
 'use client';
 
-import { createClientes} from '@/service/cliente'
+import { createClientes, updateClientes} from '@/service/cliente'
 import { Cliente } from '@/types';
-import { register } from 'module';
-import {useParams} from 'next/navigation'
+import {useSearchParams} from 'next/navigation'
 import {useState} from 'react'
 
 export default function ClienteForm(){
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [telefone, setTelefone] = useState("");
-    const [ativo, setAtivo] = useState(true);
+    const params = useSearchParams();
+    const initiAtivo = params?.get("ativo");
 
-    const params = useParams();
-    params
+    const [nome, setNome] = useState(params?.has("nome")? params?.get("nome"):"");
+    const [email, setEmail] = useState(params?.has("email")? params?.get("email"):"");
+    const [telefone, setTelefone] = useState(params?.has("telefone")? params?.get("telefone"):"");
+    const [ativo, setAtivo] = useState(initiAtivo === "true" || initiAtivo === "1" || initiAtivo === null ? true : false);
 
+    // alert(params?.get("ativo"));    
     const onChangeCheckBox = () => {
         setAtivo(!ativo);
-        alert(ativo)
+        console.log(ativo)
     }
 
     function createCliente(){
-        alert(nome+", "+email+", "+telefone+", "+ativo)
-        let client: Cliente;
+        // alert(nome+", "+email+", "+telefone+", "+ativo)
+        const client: Cliente = {
+            nome: nome,
+            email: email,
+            telefone: telefone,
+            ativo: ativo,
+        };
+
+        if(params?.has("id") && params?.get("id")!==undefined){
+            const id = params?.get("id");
+            const msg = updateClientes(id, client);
+            msg.then((status)=>{
+                if(status==204)
+                    alert("Cliente atualizado com sucesso!")
+                else
+                    alert("Erro ao atualizar cliente")
+                });
+        }else{
+            const msg = createClientes(client);
+            msg.then((status)=>{
+                if(status==201)
+                    alert("Cliente Criado com sucesso!")
+                else
+                    alert("Erro ao criar cliente")
+                });
+        }
+        setNome("");
+        setEmail("");
+        setTelefone("");
     }
     return(
-        <div>
-        <form action="cliente" method="post" onSubmit={createCliente} className='row p-4 flex'>
+        <div className='bg-gray-100 w-screen h-screen'>
+        <div className='row p-6 flex'>
             <div className="col-md-6">
                 <label htmlFor="inputPassword4" className="form-label">Nome</label>
                 <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} className="form-control" id="Nome" name='nome'/>
@@ -40,17 +67,20 @@ export default function ClienteForm(){
                 <input type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} className="form-control" id="Telefone" name='telefone'/>
             </div>
             <div className="form-check m-3">
-                <input className="form-check-input" type="checkbox" value={ativo.valueOf().toString()} defaultChecked={ativo} onChange={onChangeCheckBox} id="ativo" name='ativo'/>
-                <label className="form-check-label" htmlFor="ativo" onClick={()=> {
-                    if(!nome.trim() || !email.trim() || !telefone.trim()){
-                        return alert("Você precisa preencher todos os campos")
-                    }
-                }}>
+                <input className="form-check-input" type="checkbox" defaultChecked={(!ativo? undefined:true)} onChange={onChangeCheckBox} id="ativo" name='ativo'/>
+                <label className="form-check-label" htmlFor="ativo">
                 Ativo
                 </label>
             </div>
-            <button type="submit" className="btn btn-primary w-25 items-center" >Criar cliente</button>
-        </form>
+            <div className='flex justify-center'>
+                <button type="submit" className="btn btn-primary w-25" onClick={()=>{
+                    if(!nome?.trim() || !email?.trim() || !telefone?.trim()){
+                        return alert("Você precisa preencher todos os campos");
+                    }
+                    createCliente()
+                }}>Criar cliente</button>
+            </div>
+        </div>
         </div>
     );
 }
