@@ -21,35 +21,35 @@ export const getOrdensAtiva = async (id: number): Promise<Ordem[]> => {
     return res.json();
 }
 
-export const createOrdem = async (ordem: Ordem): Promise<string> => {
+export const createOrdem = async (ordem: Ordem): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/ordem`,{
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(ordem),
     })
-    return res.text();
+    return res.status;
 }
 
-export const updateOrdem = async (id: number,ordem: Ordem): Promise<string> => {
+export const updateOrdem = async (id: number,ordem: Ordem): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/ordem/${id}`,{
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(ordem),
     })
-    return res.text();
+    return res.status;
 }
 
 // Atuzaliza o pagamento para a data corrente
-export const updateOrdemPagamento = async (id: number): Promise<string> => {
+export const updateOrdemPagamento = async (id: number): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/ordem/${id}/pagamento`,{
         method: "PUT",
     })
-    return res.text();
+    return res.status;
 }
 
-export const deleteOrdem = async (id: number): Promise<string> => {
+export const deleteOrdem = async (id: number): Promise<number> => {
     const res = await fetch(`http://localhost:3030/api/ordem/${id}`,{
         method: "DELETE",
     })
-    return res.text();
+    return res.status;
 }

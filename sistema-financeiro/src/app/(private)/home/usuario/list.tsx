@@ -5,8 +5,16 @@ import { ReqUsuario} from '@/types';
 import { Pencil, TrashIcon } from 'lucide-react';
 import Link from 'next/link'
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function UsuarioList(props){
+    const router = useRouter();
+
+    const userAdminLevel = window.sessionStorage.getItem("userAdmin");
+    if(!userAdminLevel){
+        alert("Você não tem permissão")
+        router.push("/home")
+    }
     const [usuarios, setUsuarios] = useState(props?.usuarios)
 
     function onDeleteUsuarioClick(usuarioId: number){

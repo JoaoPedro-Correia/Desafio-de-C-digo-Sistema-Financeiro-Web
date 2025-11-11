@@ -1,13 +1,13 @@
 import { getOrdens } from '@/service/ordem'
-import { columnsOrdem } from '@/app/(private)/home/columns'
-import {DataTable} from '@/components/ui/data_table'
+import OrdemList from './list';
 
 export default async function Ordem(){
-    const data = await getOrdens()
+    const ordem = await getOrdens()
 
     return (
-        <main className="flex min-h-screen flex-col items-center p-24">
-            <DataTable columns={columnsOrdem} data={data} />
-        </main>
+        <div className='w-screen h-screen bg-gray-100 text-center flex justify-center p-6'>
+            <OrdemList ordem={ordem} >
+                </OrdemList>                        
+        </div>
     );
 } 
