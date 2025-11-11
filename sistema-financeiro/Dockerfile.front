@@ -1,5 +1,5 @@
 # Use a imagem oficial do Node
-FROM node:20-alpine AS builder
+FROM node:20-alpine as builder
 
 WORKDIR /app
 
@@ -11,20 +11,8 @@ RUN npm install
 # Copia os arquivos do projeto
 COPY . .
 
-RUN npm run dev
-
-# --- Estágio de Produção ---
-FROM node:20-alpine
-
-WORKDIR /app
-
-# Copia o node_modules e os arquivos de build do estágio 'builder'
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-# Define o host e a porta de execução
-ENV HOST 0.0.0.0
+RUN npm i -g pnpm
+    
 EXPOSE 3000
 
 # Comando de execução do servidor Next.js
