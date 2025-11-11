@@ -25,9 +25,20 @@ router.get('/usuario/:id', async (req, res) => {
     }
 });
 
+router.get('/usuariopass/:id', async (req, res) => {
+    try {
+        const {id} = req.params; 
+        const usuario = await UsuarioService.getSenhaById(id);
+        res.status(200).json(usuario);
+    } catch (error) {
+        res.status(500).send('Erro ao listar usuários');    
+    }
+});
+
 router.post('/usuario', async (req, res) => {
   try {
     const usuario = req.body;
+    console.log(usuario)
     await UsuarioService.createUsuario(usuario);
     res.status(201).send('Usuário criado');
   } catch (error) {

@@ -1,5 +1,5 @@
 import {createUsuario, listUsuarios, getUsuarioById, 
-    updateUsuario, removeUsuario
+    updateUsuario, removeUsuario, getUsuarioSenhaById
 } from '../repository/usuarioRepository.js';
 
 export class UsuarioService {
@@ -13,6 +13,10 @@ export class UsuarioService {
 
     static async getUsuarioById(id) {
         return await getUsuarioById(id);
+    }
+
+    static async getSenhaById(id) {
+        return await getUsuarioSenhaById(id);
     }
 
     static async updateUsuario(id, usuarioData) {

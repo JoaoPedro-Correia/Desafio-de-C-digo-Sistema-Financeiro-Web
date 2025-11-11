@@ -40,7 +40,7 @@ export default function LoginPage() {
       window.sessionStorage.setItem("userId", menssage.id);
       // alert(window.sessionStorage.getItem("userAdmin") === "true" ? "Login realizado como Administrador" : "Login realizado como Usuário comum");
       // Simulate redirect on success
-      router.push("/home")  ;
+      router.push("/home");
     } catch (err: any) {
       setErrorMsg(err.message);
     }finally {

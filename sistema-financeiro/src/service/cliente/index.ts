@@ -28,8 +28,6 @@ export const getClientesInadimplentes = async (): Promise<Cliente> => {
 }
 
 export const createClientes = async (cliente: Cliente): Promise<number> => {
-    console.log("Cliente: "+cliente);
-    
     const res = await fetch(`http://localhost:3030/api/cliente`,{
         method: "POST",
         headers:  {"Content-Type": "application/json"} ,

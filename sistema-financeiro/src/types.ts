@@ -3,6 +3,10 @@ export interface Login {
     senha: string;
 }
 
+export interface ReqPass{
+    senha: string;
+}
+
 export interface ReqUsuario {
     id: number;
     nome: string;
@@ -13,7 +17,7 @@ export interface ReqUsuario {
 export interface ResUsuario {
     nome: string;
     email: string;
-    senha: string;
+    senha?: string;
     administrador: boolean;
 }
 

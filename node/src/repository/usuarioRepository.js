@@ -29,10 +29,16 @@ async function getUsuarioSenhaById(id) {
 }
 
 async function updateUsuario(id, usuario) {
-    const ps = await bcrypt.hash(usuario.senha, 10);
+    if(usuario.senha !== null || usuario.senha !== undefined){
+        const ps = await bcrypt.hash(usuario.senha, 10);
 
-    sql = 'UPDATE usuarios SET nome = $1, email = $2, administrador = $3, senha = $4 WHERE id = $5';
-    const result = await connection.query(sql, [usuario.nome, usuario.email, usuario.administrador, ps, id]);
+        sql = 'UPDATE usuarios SET nome = $1, email = $2, administrador = $3, senha = $4 WHERE id = $5';
+        const result = await connection.query(sql, [usuario.nome, usuario.email, usuario.administrador, ps, id]);
+        return result.rows;
+    }
+
+    sql = 'UPDATE usuarios SET nome = $1, email = $2, administrador = $3 WHERE id = $4';
+    const result = await connection.query(sql, [usuario.nome, usuario.email, usuario.administrador, id]);
     return result.rows;
 }
 
@@ -47,4 +53,5 @@ export {
     getUsuarioById,
     updateUsuario,
     removeUsuario,
+    getUsuarioSenhaById,
 };    

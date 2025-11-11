@@ -2,10 +2,11 @@
 
 import { createClientes, updateClientes} from '@/service/cliente'
 import { Cliente } from '@/types';
-import {useSearchParams} from 'next/navigation'
+import {useRouter, useSearchParams} from 'next/navigation'
 import {useState} from 'react'
 
 export default function ClienteForm(){
+    const router = useRouter();
     const params = useSearchParams();
     const initiAtivo = params?.get("ativo");
 
@@ -33,9 +34,10 @@ export default function ClienteForm(){
             const id = params?.get("id");
             const msg = updateClientes(id, client);
             msg.then((status)=>{
-                if(status==204)
+                if(status==204){
                     alert("Cliente atualizado com sucesso!")
-                else
+                    router.push("/home/cliente")
+                }else
                     alert("Erro ao atualizar cliente")
                 });
         }else{

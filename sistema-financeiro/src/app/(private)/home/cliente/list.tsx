@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteClientes, getClientes } from '@/service/cliente';
+import { deleteClientes} from '@/service/cliente';
 import { Cliente } from '@/types';
 import { Pencil, TrashIcon } from 'lucide-react';
 import Link from 'next/link'
@@ -29,6 +29,14 @@ export default function ClienteList(props){
             <button className='w-full p-'>Criar +</button>
             </Link>
             </div>
+            <ul className='space-y-2 w-[700px] p-2 bottom-0 rounded-md'>
+                <li className='flex justify-start gap-2'>
+                    <div className='bg-amber-400 p-2 w-[160px] rounded-md text-center'><b>NOME</b></div>
+                    <div className='bg-amber-400 p-2 w-[200px] rounded-md text-center'><b>EMAIL</b></div>
+                    <div className='bg-amber-400 p-2 w-[200px] rounded-md text-center'><b>ADIMPLÊNCIA</b></div>
+                    <div className='bg-amber-400 p-2 w-[100px] rounded-md text-center'><b>AÇÕES</b></div>
+                </li>
+            </ul>
             <ul className='space-y-2 w-[700px] bg-amber-50 p-2 rounded-md'>
                 {(clientesAtivos).map((cliente: Cliente)=>
                     <li key={cliente.id} className='flex gap-2'>
